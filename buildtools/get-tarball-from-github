@@ -1,0 +1,3 @@
+#!/bin/bash -eu
+
+wget -O testroot.tar.gz https://github.com/assimilation/testroot/tarball/{$1:-master}
