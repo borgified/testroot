@@ -34,3 +34,12 @@
    fun:g_main_loop_run
    fun:main
 }
+{
+   stupid pcap_activate / bind bug...
+   Memcheck:Param
+   socketcall.bind(my_addr.sa_data)
+   fun:bind
+   obj:*
+   fun:pcap_activate
+   ...
+}
