@@ -25,8 +25,8 @@ after_success:
   - sudo /etc/init.d/nanoprobe stop
   - sudo /etc/init.d/cma stop
   - cd ~/build/borgified/testroot/cma
-#  - testify -v tests
+  - testify -v tests
   - ~/build/borgified/testroot/discovery_agents/netconfig
   - cd ~/build/borgified/root_of_binary_tree/testcode
-#  - sudo ../../testroot/testcode/grind.sh
+  - sudo ../../testroot/testcode/grind.sh
   - ~/build/borgified/root_of_binary_tree/testcode/pinger ::1
