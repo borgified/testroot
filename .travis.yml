@@ -1,0 +1,32 @@
+sudo: required
+language: c
+install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y python-flask doxygen valgrind libpcap-dev python-pip cmake build-essential pkg-config libglib2.0-dev resource-agents python-gi python-netaddr python-demjson
+  - sudo -H pip install --upgrade pip
+  - sudo -H pip install ctypesgen testify flask getent py2neo==1.6.4
+before_script:
+  - wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.1.tar.gz
+  - tar xvfz libsodium-1.0.1.tar.gz
+  - cd libsodium*
+  - ./configure
+  - make && make check && sudo make install
+  - sudo ldconfig
+services:
+  - neo4j
+script:
+  - cd ~/build/borgified
+  - mkdir root_of_binary_tree
+  - cd root_of_binary_tree
+  - cmake ../testroot
+  - sudo make install
+  - sudo ldconfig /usr/lib/x86_64-linux-gnu/assimilation
+after_success:
+  - sudo /etc/init.d/nanoprobe stop
+  - sudo /etc/init.d/cma stop
+  - cd ~/build/borgified/testroot/cma
+#  - testify -v tests
+  - ~/build/borgified/testroot/discovery_agents/netconfig
+  - cd ~/build/borgified/root_of_binary_tree/testcode
+#  - sudo ../../testroot/testcode/grind.sh
+  - ~/build/borgified/root_of_binary_tree/testcode/pinger ::1
