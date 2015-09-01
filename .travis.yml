@@ -24,6 +24,7 @@ script:
 after_success:
   - sudo /etc/init.d/nanoprobe stop
   - sudo /etc/init.d/cma stop
+  - sudo assimcli genkeys
   - cd ~/build/borgified/testroot/cma
   - testify -v tests
   - ~/build/borgified/testroot/discovery_agents/netconfig
